@@ -94,7 +94,7 @@ module FFI::Library
     if !has_callback && !invoker.kind_of?(FFI::VariadicInvoker)
       invoker.attach(self, mname.to_s)
     else
-      self.module_eval <<-code
+      self.module_eval <<-code, __FILE__, __LINE__
         @@#{mname} = invoker
         def self.#{mname}(#{params})
           @@#{mname}.#{call}(#{params})
@@ -123,7 +123,7 @@ module FFI::Library
     #
     # Attach to this module as mname/mname=
     #
-    self.module_eval <<-code
+    self.module_eval <<-code, __FILE__, __LINE__
       @@ffi_gvar_#{mname} = s
       def self.#{mname}
         @@ffi_gvar_#{mname}[:gvar]
